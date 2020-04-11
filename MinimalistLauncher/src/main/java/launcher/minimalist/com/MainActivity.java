@@ -36,11 +36,13 @@ public class MainActivity extends Activity {
         listView.setDivider(null);
         setContentView(listView);
         ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
-        p.setMargins(100, 0, 0, 0);
+
+        int margin = 60;
+        p.setMargins(margin, margin, 0, margin);
 
         // Get a list of all the apps installed
         packageManager = getPackageManager();
-        adapter = new ArrayAdapter<String>(
+        adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, new ArrayList<String>());
         packageNames = new ArrayList<>();
 
