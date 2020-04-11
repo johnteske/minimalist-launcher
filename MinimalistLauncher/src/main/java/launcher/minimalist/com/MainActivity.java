@@ -37,7 +37,8 @@ public class MainActivity extends Activity {
         setContentView(listView);
         ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
 
-        int margin = 60;
+        // Left align with clock and use same vertical margin
+        int margin = 30;
         p.setMargins(margin, margin, 0, margin);
 
         // Get a list of all the apps installed
