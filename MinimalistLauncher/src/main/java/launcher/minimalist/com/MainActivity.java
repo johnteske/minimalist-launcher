@@ -16,7 +16,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends Activity {
 
@@ -24,6 +26,9 @@ public class MainActivity extends Activity {
     private ArrayList<String> packageNames;
     private ArrayAdapter<String> adapter;
     private ListView listView;
+
+    private Map<String, String> displayNames = new HashMap<>();
+    private static final String HIDE = "HIDE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,26 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+
+        initDisplayNames();
         fetchAppList();
+    }
+
+    private void initDisplayNames() {
+        displayNames.put("andOTP", "OTP");
+        displayNames.put("Bitwarden", "Vault");
+        displayNames.put("Etar", "Calendar");
+        displayNames.put("Nextcloud", "Cloud");
+        displayNames.put("ProtonMail", "Email");
+        displayNames.put("Signal", "Messages");
+        displayNames.put("Vanadium", "Browser");
+
+        displayNames.put("Auditor", HIDE);
+        displayNames.put("DAVx\u2075", HIDE);
+        displayNames.put("PDF Viewer", HIDE);
+        displayNames.put("Messaging", HIDE);
+        displayNames.put("Minimalist Launcher+", HIDE);
+        displayNames.put("Settings", HIDE);
     }
 
     private void fetchAppList() {
@@ -90,9 +114,11 @@ public class MainActivity extends Activity {
         Collections.sort(activities, new ResolveInfo.DisplayNameComparator(packageManager));
         for (ResolveInfo resolver : activities) {
 
-            // Exclude the settings app and this launcher from the list of apps shown
-            String appName = (String) resolver.loadLabel(packageManager);
-            if (appName.equals("Settings") || appName.equals("Minimalist Launcher"))
+            // Apply the display names and exclude apps marked HIDE
+            String packageLabel = (String) resolver.loadLabel(packageManager);
+            String displayName = displayNames.get(packageLabel);
+            String appName = displayName != null ? displayName : packageLabel;
+            if (appName.equals(HIDE))
                 continue;
 
             adapter.add(appName);
