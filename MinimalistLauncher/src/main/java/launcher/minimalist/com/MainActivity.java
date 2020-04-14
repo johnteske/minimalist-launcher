@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,10 +86,11 @@ public class MainActivity extends Activity {
     }
 
     private void initDisplayNames() {
-        displayNames.put("andOTP", "OTP");
-        displayNames.put("Bitwarden", "Vault");
+        displayNames.put("andOTP", "Two-factor Authentication");
+        displayNames.put("Bitwarden", "Password Manager");
         displayNames.put("Etar", "Calendar");
         displayNames.put("Nextcloud", "Cloud");
+        displayNames.put("OsmAnd~", "Maps");
         displayNames.put("ProtonMail", "Email");
         displayNames.put("Signal", "Messages");
         displayNames.put("Vanadium", "Browser");
@@ -101,6 +103,20 @@ public class MainActivity extends Activity {
         displayNames.put("Settings", HIDE);
     }
 
+    private Comparator<ResolveInfo> DisplayNameComp = new Comparator<ResolveInfo>() {
+        public int compare(ResolveInfo o1, ResolveInfo o2) {
+            String packageLabel1 = (String) o1.loadLabel(packageManager);
+            String displayName1 = displayNames.get(packageLabel1);
+            String appName1 = displayName1 != null ? displayName1 : packageLabel1;
+
+            String packageLabel2 = (String) o2.loadLabel(packageManager);
+            String displayName2 = displayNames.get(packageLabel2);
+            String appName2 = displayName2 != null ? displayName2 : packageLabel2;
+
+            return appName1.compareTo(appName2);
+        }
+    };
+
     private void fetchAppList() {
         // Start from a clean adapter when refreshing the list
         adapter.clear();
@@ -110,8 +126,8 @@ public class MainActivity extends Activity {
         List<ResolveInfo> activities = packageManager.queryIntentActivities(
                 new Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER), 0);
 
-        // Sort the applications by alphabetical order and add them to the list
-        Collections.sort(activities, new ResolveInfo.DisplayNameComparator(packageManager));
+        Collections.sort(activities, DisplayNameComp);
+
         for (ResolveInfo resolver : activities) {
 
             // Apply the display names and exclude apps marked HIDE
