@@ -92,14 +92,17 @@ public class MainActivity extends Activity {
         displayNames.put("Nextcloud", "Cloud");
         displayNames.put("OsmAnd~", "Maps");
         displayNames.put("ProtonMail", "Email");
+        displayNames.put("Tutanota", "Transactional email");
         displayNames.put("Signal", "Messages");
         displayNames.put("Vanadium", "Browser");
+        displayNames.put("VoIP.ms SMS", "Transactional messages");
 
         displayNames.put("Auditor", HIDE);
         displayNames.put("DAVx\u2075", HIDE);
         displayNames.put("PDF Viewer", HIDE);
         displayNames.put("Messaging", HIDE);
         displayNames.put("Minimalist Launcher+", HIDE);
+        displayNames.put("Scrambled Exif", HIDE);
         displayNames.put("Settings", HIDE);
     }
 
