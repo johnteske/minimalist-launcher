@@ -10,5 +10,6 @@ adb uninstall "$package_name" # launcher.minimalist.com
 adb -d install -r MinimalistLauncher/build/outputs/apk/debug/MinimalistLauncher-debug.apk
 
 adb shell monkey -p "$package_name" -c android.intent.category.LAUNCHER 1
+adb shell cmd package set-home-activity "$package_name/.MainActivity"
 
 ./logcat.sh "$package_name"
