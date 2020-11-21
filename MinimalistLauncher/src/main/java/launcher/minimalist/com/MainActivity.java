@@ -93,6 +93,7 @@ public class MainActivity extends Activity {
         displayNames.put("OsmAnd~", "Maps");
         displayNames.put("ProtonMail", "Email");
         displayNames.put("Tutanota", "Transactional email");
+        displayNames.put("Odyssey", "Music player");
         displayNames.put("Signal", "Messages");
         displayNames.put("Vanadium", "Browser");
         displayNames.put("VoIP.ms SMS", "Transactional messages");
